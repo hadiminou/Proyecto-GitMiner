@@ -15,20 +15,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
 @Tag(name = "Commit", description = "Commit management API")
-@RestController // indicar que es controlador
+@RestController
 @RequestMapping("/gitminer/commits")
 public class CommitController {
 
-    @Autowired // cargar repositorio de commit con datos
+    @Autowired
     CommitRepository commitRepository;
 
-    // Devolver todos los users
     @Operation(
             summary = "Get a list of all commits",
             description = "Retrieve a list of all commits",
@@ -38,7 +39,7 @@ public class CommitController {
                     {@Content(schema = @Schema(implementation = Commit.class),
                             mediaType = "application/json")})
     })
-    @GetMapping // especificar metodo HTTP a utilizar
+    @GetMapping
     public List<Commit> findAll (@RequestParam(required = false) String author_name,
                                  @RequestParam(required = false) String order,
                                  @RequestParam(defaultValue = "5") int page,
@@ -89,5 +90,26 @@ public class CommitController {
         }
         return foundCommit.get();
     }
+
+    // POST http://localhost:8080/gitminer/commits
+    @Operation(
+            summary = "Post a new commit",
+            description = "Create a new commit",
+            tags = {"post", "commit"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = Commit.class), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "400", content = {@Content(schema=@Schema())})
+    })
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping()
+    public Commit createCommit(@Valid @RequestBody Commit commit) {
+        Commit newCommit = commitRepository.save(
+                new Commit(commit.getTitle(), commit.getMessage(),
+                        commit.getAuthorName(), commit.getAuthorEmail(),
+                        commit.getAuthoredDate(), commit.getWebUrl()));
+        return newCommit;
+    }
+
 }
 

@@ -21,14 +21,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Tag(name = "Comment", description = "Comment management API")
-@RestController // indicar que es controlador
+@RestController
 @RequestMapping("/gitminer/comments")
 public class CommentController {
 
-    @Autowired // cargar repositorio de comment con datos
+    @Autowired
     CommentRepository commentRepository;
 
-    // Devolver todos los comments
     @Operation(
             summary = "Retrieve a list of all comments",
             description = "Get a list of all comments",
@@ -38,7 +37,7 @@ public class CommentController {
                     {@Content(schema = @Schema(implementation = Comment.class),
                             mediaType = "application/json")})
     })
-    @GetMapping // especificar metodo HTTP a utilizar
+    @GetMapping
     public List<Comment> findAll (@RequestParam(required = false) String name,
                                   @RequestParam(required = false) String order,
                                   @RequestParam(defaultValue = "5") int page,

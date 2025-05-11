@@ -24,14 +24,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Tag(name = "Issue", description = "Issue management API")
-@RestController // indicar que es controlador
+@RestController
 @RequestMapping("/gitminer/issues")
 public class IssueController {
 
-    @Autowired // cargar repositorio de issue con datos
+    @Autowired
     IssueRepository issueRepository;
 
-    // Devolver todos los projects
     @Operation(
             summary = "Retrieve a list of all issues",
             description = "Get a list of all issues",
@@ -41,7 +40,7 @@ public class IssueController {
                     {@Content(schema = @Schema(implementation = Issue.class),
                             mediaType = "application/json")})
     })
-    @GetMapping // especificar metodo HTTP a utilizar
+    @GetMapping
     public List<Issue> findAll (@RequestParam(required = false) String state,
                                 @RequestParam(required = false) String order,
                                 @RequestParam(defaultValue = "5") int page,
@@ -121,17 +120,15 @@ public class IssueController {
         }
         List<Comment> issueComments = issueFound.get().getComments();
 
-        // ""Orderding"" if set to reverse order
         if (order != null) {
             if (order.startsWith("-")) {
                 issueComments.sort(Collections.reverseOrder());
             }
         }
-        // ""Pagination""
         int numComments = issueComments.size();
         int numPages = numComments / page;
 
-        return issueComments.subList(numPages, numPages+size); // using "pagination"
+        return issueComments.subList(numPages, numPages+size);
     }
 
 

@@ -23,14 +23,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Tag(name = "User", description = "User management API")
-@RestController // indicar que es controlador
+@RestController
 @RequestMapping("/gitminer/users")
 public class UserController {
 
-    @Autowired // cargar repositorio de user con datos
+    @Autowired
     UserRepository userRepository;
 
-    // Devolver todos los users
     @Operation(
             summary = "Retrieve a list of all users",
             description = "Get a list of all users",
@@ -40,7 +39,7 @@ public class UserController {
                     {@Content(schema = @Schema(implementation = User.class),
                             mediaType = "application/json")})
     })
-    @GetMapping // especificar metodo HTTP a utilizar
+    @GetMapping
     public List<User> findAll (@RequestParam(required = false) String name,
                                @RequestParam(required = false) String order,
                                @RequestParam(defaultValue = "5") int page,
@@ -93,5 +92,22 @@ public class UserController {
         return foundUser.get();
     }
 
+    // POST http://localhost:8080/gitminer/users
+    @Operation(
+            summary = "Post a new user",
+            description = "Create and return a new user",
+            tags = { "user", "post" }
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = {@Content(schema = @Schema(implementation = User.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "400", content = {@Content(schema = @Schema())})
+    })
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+        User newUser = userRepository.save(
+                new User(user.getUsername(), user.getName(), user.getAvatarUrl(), user.getWebUrl())
+        );
+        return newUser;
+    }
 
 }
