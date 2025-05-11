@@ -16,6 +16,7 @@ public class Comment {
     @Id
     @JsonProperty("id")
     private String id;
+
     @JsonProperty("body")
     @NotEmpty(message = "The message cannot be empty.")
     @Column(columnDefinition="TEXT")
@@ -29,6 +30,7 @@ public class Comment {
     @JsonProperty("created_at")
     @NotEmpty(message = "The field created_at cannot be empty.")
     private String createdAt;
+
     @JsonProperty("updated_at")
     private String updatedAt;
 

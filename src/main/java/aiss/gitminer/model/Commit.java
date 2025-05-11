@@ -1,11 +1,9 @@
 package aiss.gitminer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.transaction.reactive.GenericReactiveTransaction;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -16,17 +14,21 @@ public class Commit {
     @Id
     @JsonProperty("id")
     private String id;
+
     @JsonProperty("title")
     private String title;
 
     @JsonProperty("message")
     @Column(columnDefinition="TEXT")
     private String message;
+
     @JsonProperty("author_name")
     @NotEmpty(message = "Author name cannot be empty.")
     private String authorName;
+
     @JsonProperty("author_email")
     private String authorEmail;
+
     @JsonProperty("authored_date")
     @NotEmpty(message = "Author date cannot be empty.")
     private String authoredDate;
@@ -35,6 +37,18 @@ public class Commit {
     @NotEmpty(message = "URL cannot be empty." +
             "")
     private String webUrl;
+
+    public Commit() {
+    }
+
+    public Commit(String title, String message, String authorName, String authorEmail, String authoredDate, String webUrl) {
+        this.title = title;
+        this.message = message;
+        this.authorName = authorName;
+        this.authorEmail = authorEmail;
+        this.authoredDate = authoredDate;
+        this.webUrl = webUrl;
+    }
 
     public String getId() {
         return id;

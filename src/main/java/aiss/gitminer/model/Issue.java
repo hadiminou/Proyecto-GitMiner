@@ -8,6 +8,7 @@ import javax.annotation.Generated;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.IdentityHashMap;
 import java.util.List;
 
 @Entity
@@ -17,34 +18,44 @@ public class Issue {
     @Id
     @JsonProperty("id")
     private String id;
+
     @JsonProperty("title")
     private String title;
+
     @JsonProperty("description")
     @Column(columnDefinition="TEXT")
     private String description;
+
     @JsonProperty("state")
     private String state;
 
     @JsonProperty("created_at")
     private String createdAt;
+
     @JsonProperty("updated_at")
     private String updatedAt;
+
     @JsonProperty("closed_at")
     private String closedAt;
+
     @JsonProperty("labels")
     @ElementCollection
     private List<String> labels;
+
     @JsonProperty("author")
     //@NotEmpty(message = "The author of the issue cannot be empty")
     @JoinColumn(name = "author_id",referencedColumnName = "id")
     @OneToOne(cascade=CascadeType.ALL)
     private User author;
+
     @JsonProperty("assignee")
     @JoinColumn(name = "assignee_id",referencedColumnName = "id")
     @OneToOne(cascade=CascadeType.ALL)
     private User assignee;
+
     @JsonProperty("votes")
     private Integer votes;
+
     @JsonProperty("comments")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "issueId")

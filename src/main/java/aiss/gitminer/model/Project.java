@@ -1,4 +1,5 @@
 
+
 package aiss.gitminer.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,7 +16,7 @@ public class Project {
 
     @Id
     @JsonProperty("id")
-    public String id;
+    private String id;
 
     @JsonProperty("name")
     @NotEmpty(message = "The name of the project cannot be empty")
@@ -24,6 +25,7 @@ public class Project {
     @JsonProperty("web_url")
     @NotEmpty(message = "The URL of the project cannot be empty")
     public String webUrl;
+
     @JsonProperty("commits")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "projectId")
@@ -34,9 +36,15 @@ public class Project {
     @JoinColumn(name = "projectId")
     private List<Issue> issues;
 
-    public Project() {
+    public Project(String name, String webUrl) {
+        this.name = name;
+        this.webUrl = webUrl;
         commits = new ArrayList<>();
         issues = new ArrayList<>();
+    }
+
+    public Project() {
+
     }
 
     public String getId() {

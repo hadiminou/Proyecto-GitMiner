@@ -1,13 +1,12 @@
 
+
 package aiss.gitminer.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.annotation.Generated;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -18,13 +17,17 @@ public class User {
     @Id
     @JsonProperty("id")
     private String id;
+
     @JsonProperty("username")
     @NotEmpty(message = "The username cannot be empty")
     private String username;
+
     @JsonProperty("name")
     private String name;
+
     @JsonProperty("avatar_url")
     private String avatarUrl;
+
     @JsonProperty("web_url")
     private String webUrl;
 
