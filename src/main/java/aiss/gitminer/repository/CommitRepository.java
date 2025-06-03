@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommitRepository extends JpaRepository<Commit, String> {
     Page<Commit> findById (String id, Pageable pageable);
-    Page<Commit> findByAuthorName(String author_name, Pageable paging);
+    Page<Commit> findByAuthorName(String authorName, Pageable paging);
 }

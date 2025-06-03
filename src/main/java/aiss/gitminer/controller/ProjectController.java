@@ -114,7 +114,8 @@ public class ProjectController {
     @PostMapping()
     public Project createProject(@Valid @RequestBody Project project) {
         Project newProject = projectRepository.save(
-                new Project(project.getName(), project.getWebUrl()));
+                new Project(project.getId(), project.getName(), project.getWebUrl(),
+                        project.getCommits(), project.getIssues()));
         return newProject;
     }
 

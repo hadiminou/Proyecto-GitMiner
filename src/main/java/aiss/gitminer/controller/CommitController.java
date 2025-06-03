@@ -39,7 +39,7 @@ public class CommitController {
                             mediaType = "application/json")})
     })
     @GetMapping // especificar metodo HTTP a utilizar
-    public List<Commit> findAll (@RequestParam(required = false) String author_name,
+    public List<Commit> findAll (@RequestParam(required = false) String authorName,
                                  @RequestParam(required = false) String order,
                                  @RequestParam(defaultValue = "5") int page,
                                  @RequestParam(defaultValue = "5") int size) {
@@ -59,11 +59,11 @@ public class CommitController {
 
         Page<Commit> pageCommits;
 
-        if (author_name == null) {
+        if (authorName == null) {
             pageCommits = commitRepository.findAll(paging);
         }
         else {
-            pageCommits = commitRepository.findByAuthorName(author_name, paging);
+            pageCommits = commitRepository.findByAuthorName(authorName, paging);
         }
         return pageCommits.getContent();
     }
@@ -88,6 +88,11 @@ public class CommitController {
             throw new CommitNotFoundException();
         }
         return foundCommit.get();
+    }
+
+    @PostMapping()
+    public Commit create(@RequestBody Commit commit) {
+        return commitRepository.save(commit);
     }
 }
 

@@ -134,6 +134,9 @@ public class IssueController {
         return issueComments.subList(numPages, numPages+size); // using "pagination"
     }
 
-
+    @PostMapping
+    public Issue createIssue(@RequestBody Issue issue) {
+        return issueRepository.save(issue);
+    }
 
 }
