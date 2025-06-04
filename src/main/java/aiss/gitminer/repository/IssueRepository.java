@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 public interface IssueRepository extends JpaRepository<Issue, String> {
 
     Page<Issue> findByState(String state, Pageable paging);
+    Page<Issue> findByAuthorId(String id, Pageable paging);
 }

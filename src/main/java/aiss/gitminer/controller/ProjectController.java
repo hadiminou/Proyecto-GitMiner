@@ -26,12 +26,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Tag(name = "Project", description = "Project management API")
-@RestController // indicar que es controlador
+@RestController
 @RequestMapping("/gitminer/projects")
 public class ProjectController {
 
 
-    @Autowired // cargar repositorio de projects con datos
+    @Autowired
     ProjectRepository projectRepository;
 
     // GET https://localhost:8080/giminer/projects
@@ -44,7 +44,7 @@ public class ProjectController {
                     {@Content(schema = @Schema(implementation = Project.class),
                             mediaType = "application/json")})
     })
-    @GetMapping // especificar metodo HTTP a utilizar
+    @GetMapping
     public List<Project> findAll (@RequestParam(required = false) String name,
                                   @RequestParam(required = false) String order,
                                   @RequestParam(defaultValue = "5") int page,
