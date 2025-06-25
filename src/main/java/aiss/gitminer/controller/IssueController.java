@@ -43,7 +43,7 @@ public class IssueController {
     @GetMapping
     public List<Issue> findAll (@RequestParam(required = false) String state,
                                 @RequestParam(required = false) String order,
-                                @RequestParam(defaultValue = "5") int page,
+                                @RequestParam(defaultValue = "0") int page,
                                 @RequestParam(defaultValue = "5") int size) {
         Pageable paging;
 
@@ -109,7 +109,7 @@ public class IssueController {
             @Parameter(description = "id of the issue to be searched")
             @PathVariable String id,
             @RequestParam(required = false) String order,
-            @RequestParam(defaultValue = "5") int page,
+            @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size)
             throws IssueNotFoundException {
 

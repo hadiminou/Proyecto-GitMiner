@@ -40,7 +40,7 @@ public class CommentController {
     @GetMapping
     public List<Comment> findAll (@RequestParam(required = false) String name,
                                   @RequestParam(required = false) String order,
-                                  @RequestParam(defaultValue = "5") int page,
+                                  @RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "5") int size) {
         Pageable paging;
 
@@ -87,6 +87,26 @@ public class CommentController {
             throw new CommentNotFoundException();
         }
         return foundComment.get();
+    }
+
+    @Operation(
+            summary = "Create a new comment",
+            description = "Creates a new comment in the database",
+            tags = {"comments", "post"}
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "201", content = {
+                    @Content(schema = @Schema(implementation = Comment.class),
+                            mediaType = "application/json")})
+    })
+    @PostMapping
+    public Comment createComment(@RequestBody Comment comment) {
+        Optional<Comment> existing = commentRepository.findByBodyAndCreatedAt(
+                comment.getBody(),
+                comment.getCreatedAt()
+        );
+
+        return existing.orElseGet(() -> commentRepository.save(comment));
     }
 
 

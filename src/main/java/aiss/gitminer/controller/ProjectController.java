@@ -47,7 +47,7 @@ public class ProjectController {
     @GetMapping
     public List<Project> findAll (@RequestParam(required = false) String name,
                                   @RequestParam(required = false) String order,
-                                  @RequestParam(defaultValue = "5") int page,
+                                  @RequestParam(defaultValue = "0") int page,
                                   @RequestParam(defaultValue = "5") int size) {
         Pageable paging;
 
