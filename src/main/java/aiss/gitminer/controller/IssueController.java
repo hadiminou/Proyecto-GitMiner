@@ -125,10 +125,14 @@ public class IssueController {
                 issueComments.sort(Collections.reverseOrder());
             }
         }
-        int numComments = issueComments.size();
-        int numPages = numComments / page;
+        int fromIndex = page * size;
+        int toIndex = Math.min(fromIndex + size, issueComments.size());
 
-        return issueComments.subList(numPages, numPages+size);
+        if (fromIndex >= issueComments.size()) {
+            return Collections.emptyList();
+        }
+
+        return issueComments.subList(fromIndex, toIndex);
     }
 
     @PostMapping
