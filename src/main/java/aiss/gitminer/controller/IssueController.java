@@ -104,7 +104,7 @@ public class IssueController {
                     {@Content(schema = @Schema(implementation = Issue.class),
                             mediaType = "application/json")})
     })
-    @GetMapping("/:id/comments") // especificar metodo HTTP a utilizar
+    @GetMapping("/{id}/comments") // especificar metodo HTTP a utilizar
     public List<Comment> findIssueComments (
             @Parameter(description = "id of the issue to be searched")
             @PathVariable String id,
